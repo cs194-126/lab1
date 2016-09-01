@@ -169,3 +169,5 @@ Objective: demonstrate you can use a breadboard, set up some basic circuits, wri
 1. Show us your circuit with firmware running. A LED should be pulsing, approximately linearly varying in perceived intensity from 0-100% brightness then ramping back down to 0%, with a full cycle taking approximately 2 seconds. The ramping should appear smooth.
 2. Press and hold the button. The LED intensity should freeze at the point where the button is pressed. After the button is released, the LED should continue pulsing as described in the previous section. 
 3. We may ask you to show your code as well as explain parts of it. Make sure you understand everything you write!
+
+_Note: no code needs to be submitted._
