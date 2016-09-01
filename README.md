@@ -123,11 +123,11 @@ In this assignment, you will build, on a breadboard, a ciruit that pulses a LED 
 #### Breadboard connection refresher
 Recall that breadboards are wired internally as such:
 
-![Breadboard internals](/docs/breadboard-internals.png?raw=true)
+![Breadboard internals](/docs/breadboard-internals.png?raw=true =300x )
 
 Caveat emptor: some breadboards divide up the power rails into quadrants, adding a break in the power rails among the center:
 
-![Breadboard with broken rails](/docs/breadboard-internals-broke.png?raw=true)
+![Breadboard with broken rails](/docs/breadboard-internals-broke.png?raw=true =300x )
 
 Others have the power rails connected all the way across the length of the breadboard. 
 
