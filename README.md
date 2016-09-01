@@ -136,7 +136,7 @@ You will want to check if your breadboard is wired like this.
 #### LED Circuit
 You will need a LED connected to a PWM-capable output. Note that the pin the onboard LED is connected is NOT PWM-capable, so you will need to wire up an external circuit. The typical circuit for an indicator LED is a LED in series with a resistor:
 
-TODO: add schematic
+![LED circuit](/docs/led.png?raw=true)
 
 (this example is wired up such that the LED turns on when the voltage on the pin is high).
 
@@ -146,7 +146,11 @@ TODO: add schematic
 
 You will also need a switch connected to any IO. The general circuit block for a switch is wiring up the switch between the IO pin and ground (such that the switch shorts the IO to ground when pressed), and a weak pull-up resistor between the IO pin and high (such that the IO is pulled high when the switch is not pressed):
 
+![Switch circuit](/docs/switch.png?raw=true)
+
 You can omit the resistor because the chip has built-in configurable pull-ups on all IOs (so just wire up the switch between IO and ground).
+
+![Switch circuit](/docs/switch-nores.png?raw=true)
 
 ### Software
 In the included example code, you have `DigitalOut led(LED1)`, which creates an object of class `DigitalOut` (with one argument, PinName `LED1`) as `led`. For this assignment, the following other classes may be helpful:
