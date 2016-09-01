@@ -70,7 +70,7 @@ _Check that the compiled firmware works._
 0. If it worked, the onboard user-controlled LED (the green one next to the reset button) shoud blink at about 1Hz. 
 
 ### Installing Eclipse
-_This section is optional, for people want to work with an IDE and GUI debug tools. This is recommended for beginners, as it provides a low learning curve and integrated way to code, program, and debug firmware. For the masochists among us that love vim/emacs and command-line GDB, feel free to skip this section._
+_This section is optional, for people who want to work with an IDE and GUI debug tools. This is recommended for beginners, as it provides a low learning curve and integrated way to code, program, and debug firmware. For the masochists among us that love vim/emacs and command-line GDB, feel free to skip this section._
 
 #### Initial setup
 0. [Download Eclipse](https://www.eclipse.org/downloads/). Eclipse IDE for C/C++ developers is a good option.
@@ -88,6 +88,7 @@ _This section is optional, for people want to work with an IDE and GUI debug too
 0. Build the project.
   - In the Project Explorer, right-click the newly created project and click Build.
   - If the build succeeded, this should create all the `.elf` files (compiled firmware) in the `build/` directory.
+  - PROTIP: you can also start a build with Ctrl+B.
 0. Set up a debug configuration. Right-click the `.elf` file and select Debug As > Debug Configurations...
   0. From the list on the left side of the new window, right click GDB OpenOCD Debugging and select New.
   0. Under the Main tab:
@@ -112,18 +113,23 @@ _This section is optional, for people want to work with an IDE and GUI debug too
   0. Under the Common tab:
     - If you want to launch this target from the quickbar, check the options in Display in favorites menu.
 0. Try launching the debug target. This will flash the microcontroller and start it.
-  - If all goes well, you should be able to pause the target (and Eclipse should bring up the next line of code the microcontroller will execute). The normal debugging tools are available: step-into, step-over, step-out, breakpoints, register view, memory view, and more. 
+  - If all goes well, you should be able to pause the target (and Eclipse should bring up the next line of code the microcontroller will execute). The normal debugging tools are available: step-into, step-over, step-out, breakpoints, register view, memory view, and more.
+  - PROTIP: you can launch the last debug target with Ctrl+F11.
 
 ## Assignment
+In this assignment, you will build, on a breadboard, a ciruit that pulses a LED with a button that freezes the pulsing.
+
 ### Hardware
 #### Breadboard connection refresher
 Recall that breadboards are wired internally as such:
 
-TODO: add picture
+![Breadboard internals](/docs/breadboard-internals.svg?raw=true)
 
 Caveat emptor: some breadboards divide up the power rails into quadrants, adding a break in the power rails among the center:
 
-TODO: add picture
+![Breadboard with broken rails](/docs/breadboard-internals-broke.svg?raw=true)
+
+Others have the power rails connected all the way across the length of the breadboard. 
 
 You will want to check if your breadboard is wired like this.
 
@@ -138,14 +144,24 @@ TODO: add schematic
 
 #### Switch Circuit
 
+You will also need a switch connected to any IO. The general circuit block for a switch is wiring up the switch between the IO pin and ground (such that the switch shorts the IO to ground when pressed), and a weak pull-up resistor between the IO pin and high (such that the IO is pulled high when the switch is not pressed):
 
-### Software 
+You can omit the resistor because the chip has built-in configurable pull-ups on all IOs (so just wire up the switch between IO and ground).
+
+### Software
+In the included example code, you have `DigitalOut led(LED1)`, which creates an object of class `DigitalOut` (with one argument, PinName `LED1`) as `led`. For this assignment, the following other classes may be helpful:
+ - `DigitalIn(PinName, mode)`: a digital input object, with an optional `mode` parameter (configurable as `PullUp` or `PullDown`). Objects can be read as a int, returning 0 when the input is low and 1 when the input is high.
+ - `PwmOut(PinName)`: a PWM output. A float can be assigned to this object, setting the duty cycle (fraction of time the output is high, `1.0f` = 1 period). The default period is 20ms, which is fast enough for LED dimming.
+ 
+Note that if you simply vary the PWM output to a LED linearly, you will get nonlinear perceived brightness (see [Stevens' power law](https://en.wikipedia.org/wiki/Stevens%27_power_law) for more information). To compensate, you want the PWM duty cycle to be the square of the desired perceived brightness.
+
+See the Checkoff Spec for more details of what your firmware should do. There are many ways to structure your code to achieve the desired effect, some easier and cleaner than others, but checkoff will not take into account code quality.
 
 ## Checkoff Spec
 _How to get credit for what you did!_ 
 
 Objective: demonstrate you can use a breadboard, set up some basic circuits, write some basic code, and compile and deploy it.
 
-1. Show us your circuit with firmware running. A LED should be pulsing, linearly varying in perceived intensity from 0-100% brightness then ramping back down, with a full cycle taking approximately 2 seconds.
+1. Show us your circuit with firmware running. A LED should be pulsing, approximately linearly varying in perceived intensity from 0-100% brightness then ramping back down to 0%, with a full cycle taking approximately 2 seconds. The ramping should appear smooth.
 2. Press and hold the button. The LED intensity should freeze at the point where the button is pressed. After the button is released, the LED should continue pulsing as described in the previous section. 
 3. We may ask you to show your code as well as explain parts of it. Make sure you understand everything you write!
