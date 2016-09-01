@@ -148,7 +148,7 @@ You will also need a switch connected to any IO. The general circuit block for a
 
 ![Switch circuit](/docs/switch.png?raw=true)
 
-You can omit the resistor because the chip has built-in configurable pull-ups on all IOs (so just wire up the switch between IO and ground).
+You can omit the resistor because the chip has built-in configurable pull-ups on all IOs (so just wire up the switch between IO and ground):
 
 ![Switch circuit](/docs/switch-nores.png?raw=true)
 
