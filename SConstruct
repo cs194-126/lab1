@@ -9,6 +9,8 @@ SetOption('num_jobs', multiprocessing.cpu_count() + 1)
 env = Environment(ENV={'PATH' : os.environ['PATH']}, tools=['mingw'])
 Export('env')
 
+SConscript('mbed-scons/SConscript-mbed')
+
 ##
 ## Go fast!
 ##
@@ -30,28 +32,18 @@ if ARGUMENTS.get('VERBOSE') != '1':
     'CCCOMSTR': 'CC',
     'CXXCOMSTR': 'CXX',
     'LINKCOMSTR': 'LD',
-    'RANLIBCOMSTR': 'RANLIB',
-    'OBJCOPYCOMSTR': 'BIN',
+    'RANLIBCOMSTR': 'IND',
+    'BINCOMSTR': 'BIN',
     'OBJDUMPCOMSTR': 'DUMP',
-    'SYMBOLSCOMSTR': 'SYM',
-    'SYMBOLSIZESCOMSTR': 'SYM',
+    'SYMBOLSCOMSTR': 'DUMP',
+    'SYMBOLSIZESCOMSTR': 'DUMP',
   })
 
 ###
-### Imports
+### Additional environment setup
 ###
-SConscript('mbed-scons/SConscript-env-platforms', duplicate=0)
-SConscript('mbed-scons/SConscript-env-gcc-arm', duplicate=0)
-SConscript('mbed-scons/SConscript-mbed', duplicate=0)
-
-###
-### Platform-specific build targets for mbed libraries
-###
-env.Append(CCFLAGS = '-Os')
-env['MBED_LIB_LINKSCRIPTS_ROOT'] = Dir('mbed/hal').srcnode()
-env['MBED_TARGETS_JSON_FILE'] = File('mbed/hal/targets.json').srcnode()
-
-SConscript('mbed-scons/targets/SConscript-mbed-env-stm32l432kc', duplicate=0)
+SConscript('mbed-scons/SConscript-env-platforms')
+SConscript('mbed-scons/SConscript-env-gcc-arm')
 
 ###
 ### Actual build targets here
