@@ -10,11 +10,11 @@ _Set up required software._
   - On Windows and Mac, [download and run this installer](https://launchpad.net/gcc-arm-embedded).
 0. Install [SCons](http://scons.org/), the build system.
   - On Debian-based systems (including Ubuntu), this is available as a package:
-  
+
     ```
     sudo apt-get install scons
     ```
-    
+
   - On Windows, [download and run this installer](http://scons.org/pages/download.html). You will need to install [Python 2.7, 32-bit]](https://www.python.org/downloads/) if you do not have it already (as of SCons 2.5.0, there is no Python3 support yet and the installer will not detect 64-bit Python versions).
 0. Install [OpenOCD](http://openocd.org/), a program that interfaces with the on-board debugger.
   - **IMPORTANT**: The latest official OpenOCD release does not support the Nucleo L432KC. We've added support and [built binaries which you can download and install](https://github.com/cs194-126/openocd/releases). For the paranoid or truly crazy among us, [you can see the code we changed](https://github.com/cs194-126/openocd/commit/f2501b08a11931191048a76883e0541f9cb1d079) and build it from source if you wish.
@@ -27,29 +27,29 @@ _Get the code._
 #### Command-line option
 0. Ensure command-line git is installed.
   - On Debian-based systems (including Ubuntu), this is available as a package.
-  
+
     ```
     sudo apt-get install git
     ```
-    
+
   - On Windows, [download and run this installer](https://git-scm.com/download/win).
 0. Clone (download a copy of) the repository:
 
   ```
   git clone --recursive git@github.com:cs194-126/lab1.git
   ```
-  
+
 0. To pull new updates your local repository from GitHub:
 
   ```
   git pull
   git submodule update --init --recursive
   ```
-  
-  Submodules (essentially other repositories that are cloned and tracked as part of this repository) are not automatically updated as part of pull, which is why you must execute the submodule update separately.   
+
+  Submodules (essentially other repositories that are cloned and tracked as part of this repository) are not automatically updated as part of pull, which is why you must execute the submodule update separately.
 
 #### GUI option
-_GitHub Desktop is only avialable for Windows and Mac._
+_GitHub Desktop is only available for Windows and Mac._
 
 0. Download and install [GitHub Desktop](https://desktop.github.com/).
 0. Clone [this repository](https://github.com/cs194-126/lab1) to desktop using the "Clone or download" button on the web interface. It should automatically launch GitHub Desktop.
@@ -67,7 +67,7 @@ _Check that the compiled firmware works._
   to run the build system, which compiles both the mbed library in `mbed/` and the top-level program in `src/`. This should produce a compiled, flashable binary, `build/program.bin`.
 0. Connect your microcontroller board to your computer via USB. You should see a flash drive named `NUCLEO_L432KC` show up.
 0. Copy `build/program.bin` into the `NUCLEO_L432KC` flash drive to write the program to the microcontroller. This may take a few seconds.
-0. If it worked, the onboard user-controlled LED (the green one next to the reset button) shoud blink at about 1Hz. 
+0. If it worked, the onboard user-controlled LED (the green one next to the reset button) should blink at about 1Hz.
 
 ### Installing Eclipse
 _This section is optional, for people who want to work with an IDE and GUI debug tools. This is recommended for beginners, as it provides a low learning curve and integrated way to code, program, and debug firmware. For the masochists among us that love vim/emacs and command-line GDB, feel free to skip this section._
@@ -117,7 +117,7 @@ _This section is optional, for people who want to work with an IDE and GUI debug
   - PROTIP: you can launch the last debug target with Ctrl+F11.
 
 ## Assignment
-In this assignment, you will build, on a breadboard, a ciruit that pulses a LED with a button that freezes the pulsing.
+In this assignment, you will build (on a breadboard), a circuit that pulses a LED with a button that freezes the pulsing.
 
 ### Hardware
 #### Breadboard connection refresher
@@ -129,7 +129,7 @@ Caveat emptor: some breadboards divide up the power rails into quadrants, adding
 
 ![Breadboard with broken rails](/docs/breadboard-internals-broke.svg.png?raw=true)
 
-Others have the power rails connected all the way across the length of the breadboard. 
+Others have the power rails connected all the way across the length of the breadboard.
 
 You will want to check if your breadboard is wired like this.
 
@@ -140,7 +140,7 @@ You will need a LED connected to a PWM-capable output. Note that the pin the onb
 
 (this example is wired up such that the LED turns on when the voltage on the pin is high).
 
-[The pinning guide](https://developer.mbed.org/platforms/ST-Nucleo-L432KC/) may be helpful.
+[The Nucleo pinning guide](https://developer.mbed.org/platforms/ST-Nucleo-L432KC/) may be helpful.
 
 #### Switch Circuit
 
@@ -154,20 +154,20 @@ You can omit the resistor because the chip has built-in configurable pull-ups on
 
 ### Software
 In the included example code, you have `DigitalOut led(LED1)`, which creates an object of class `DigitalOut` (with one argument, PinName `LED1`) as `led`. For this assignment, the following other classes may be helpful:
- - `DigitalIn(PinName, mode)`: a digital input object, with an optional `mode` parameter (configurable as `PullUp` or `PullDown`). Objects can be read as a int, returning 0 when the input is low and 1 when the input is high.
+ - `DigitalIn(PinName, mode)`: a digital input object, with an optional `mode` parameter (configurable as `PullUp` or `PullDown`). Objects can be read as an int, returning 0 when the input is low and 1 when the input is high.
  - `PwmOut(PinName)`: a PWM output. A float can be assigned to this object, setting the duty cycle (fraction of time the output is high, `1.0f` = 1 period). The default period is 20ms, which is fast enough for LED dimming.
- 
+
 Note that if you simply vary the PWM output to a LED linearly, you will get nonlinear perceived brightness (see [Stevens' power law](https://en.wikipedia.org/wiki/Stevens%27_power_law) for more information). To compensate, you want the PWM duty cycle to be the square of the desired perceived brightness.
 
 See the Checkoff Spec for more details of what your firmware should do. There are many ways to structure your code to achieve the desired effect, some easier and cleaner than others, but checkoff will not take into account code quality.
 
 ## Checkoff Spec
-_How to get credit for what you did!_ 
+_How to get credit for what you did!_
 
-Objective: demonstrate you can use a breadboard, set up some basic circuits, write some basic code, and compile and deploy it.
+Objective: demonstrate you can use a breadboard, wire up an external switch and LED, write code to make them do something cool, and compile and deploy it.
 
-1. Show us your circuit with firmware running. A LED should be pulsing, approximately linearly varying in perceived intensity from 0-100% brightness then ramping back down to 0%, with a full cycle taking approximately 2 seconds. The ramping should appear smooth.
-2. Press and hold the button. The LED intensity should freeze at the point where the button is pressed. After the button is released, the LED should continue pulsing as described in the previous section. 
+1. Show us your circuit with firmware running. A LED should be "pulsing": approximately linearly varying in perceived intensity from 0-100% brightness then ramping back down to 0%, with a full cycle taking approximately 2 seconds. The ramping should appear smooth.
+2. Press and hold the button. The LED intensity should freeze at the point where the button is pressed. After the button is released, the LED should continue pulsing as described in the previous section.
 3. We may ask you to show your code as well as explain parts of it. Make sure you understand everything you write!
 
 _Note: no code needs to be submitted._
