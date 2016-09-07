@@ -140,6 +140,12 @@ You will need a LED connected to a PWM-capable output. Note that the pin the onb
 
 (this example is wired up such that the LED turns on when the voltage on the pin is high).
 
+For reference, a LED is pinned like:
+
+![LED component](/docs/led-pinning.png?raw=true)
+
+(note that the flat side on the flange indicates the negative terminal, or cathode (K). The other pin is the positive terminal, or anode (A).
+
 [The Nucleo pinning guide](https://developer.mbed.org/platforms/ST-Nucleo-L432KC/) may be helpful.
 
 #### Switch Circuit
@@ -151,6 +157,12 @@ You will also need a switch connected to any IO. The general circuit block for a
 You can omit the resistor because the chip has built-in configurable pull-ups on all IOs (so just wire up the switch between IO and ground):
 
 ![Switch circuit](/docs/switch-nores.png?raw=true)
+
+For reference, a switch is pinned like:
+
+![Switch component](/docs/switch-pinning.png?raw=true)
+
+Note that two pairs of pins are internally connected together, and pressing the switch connects the pairs (such that all four pins would be connected). Don't wire it with the "switch" across the two internally connected pins, otherwise you'll get a "switch" that's always pressed!
 
 ### Software
 In the included example code, you have `DigitalOut led(LED1)`, which creates an object of class `DigitalOut` (with one argument, PinName `LED1`) as `led`. For this assignment, the following other classes may be helpful:
