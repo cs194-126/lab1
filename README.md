@@ -140,11 +140,11 @@ You will need a LED connected to a PWM-capable output. Note that the pin the onb
 
 (this example is wired up such that the LED turns on when the voltage on the pin is high).
 
-For reference, a LED is pinned like:
+For reference, a LED is pinned like (one background square is one breadboard tie point):
 
 ![LED component](/docs/led-pinning.png?raw=true)
 
-(note that the flat side on the flange indicates the negative terminal, or cathode (K). The other pin is the positive terminal, or anode (A).
+Note that the flat side on the flange (circled in red) indicates the negative terminal, or cathode (K). The other pin is the positive terminal, or anode (A).
 
 [The Nucleo pinning guide](https://developer.mbed.org/platforms/ST-Nucleo-L432KC/) may be helpful.
 
@@ -158,7 +158,7 @@ You can omit the resistor because the chip has built-in configurable pull-ups on
 
 ![Switch circuit](/docs/switch-nores.png?raw=true)
 
-For reference, a switch is pinned like:
+For reference, a switch is pinned like (one background square is one breadboard tie point):
 
 ![Switch component](/docs/switch-pinning.png?raw=true)
 
