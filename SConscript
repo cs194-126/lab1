@@ -1,7 +1,7 @@
 Import('env')
 
 env.ConfigureMbedTarget('NUCLEO_L432KC', File('mbed/hal/targets.json').srcnode())
-env.Append(CCFLAGS = '-Os')
+env.Append(CCFLAGS = '-O1')
 
 # Build the mbed library as a static library
 mbed_paths = env.GetMbedSourceDirectories('mbed/hal')
@@ -18,6 +18,7 @@ env.Append(LINKFLAGS=[
   mbed_lib,
   '-Wl,--no-whole-archive',
   '--specs=nosys.specs',
+  '-u', '_printf_float',
 ])
 
 env.Append(CCFLAGS = ['-Werror', '-Wall'])  # strict warnings in user program
