@@ -16,7 +16,7 @@ _Set up required software._
     sudo apt-get install scons
     ```
 
-  - On Windows, [download and run this installer](http://scons.org/pages/download.html). You will need to install [Python 2.7, 32-bit]](https://www.python.org/downloads/) if you do not have it already (as of SCons 2.5.0, there is no Python3 support yet and the installer will not detect 64-bit Python versions).
+  - On Windows, [download and run this installer](http://scons.org/pages/download.html). You will need to install [Python 2.7, 32-bit](https://www.python.org/downloads/) if you do not have it already (as of SCons 2.5.0, there is no Python3 support yet and the installer will not detect 64-bit Python versions).
     - Make sure to add SCons to your system PATH. By default, SCons will be installed in the `Scripts` folder under your Python directory.
 0. Install [OpenOCD](http://openocd.org/), a program that interfaces with the on-board debugger.
   - **IMPORTANT**: The latest official OpenOCD release does not support the Nucleo L432KC. We've added support and [built binaries which you can download and install](https://github.com/cs194-126/openocd/releases). For the paranoid or truly crazy among us, [you can see the code we changed](https://github.com/cs194-126/openocd/commit/f2501b08a11931191048a76883e0541f9cb1d079) and build it from source if you wish.
