@@ -8,6 +8,7 @@ _Set up required software._
 0. Install [GCC-ARM](https://launchpad.net/gcc-arm-embedded) to build the embedded firmware.
   - On Debian-based systems (including Ubuntu), a [PPA and the instructions for setting it up are available](https://launchpad.net/~team-gcc-arm-embedded/+archive/ubuntu/ppa). Note: the one included by default in the system package manager may not work.
   - On Windows and Mac, [download and run this installer](https://launchpad.net/gcc-arm-embedded).
+    - On Windows, make sure to add gcc-arm to your PATH so it can be run from anywhere. By default, gcc-arm will be installed in `C:\Program Files (x86)\GNU Tools ARM Embedded\(version)\bin`.
 0. Install [SCons](http://scons.org/), the build system.
   - On Debian-based systems (including Ubuntu), this is available as a package:
 
@@ -16,8 +17,16 @@ _Set up required software._
     ```
 
   - On Windows, [download and run this installer](http://scons.org/pages/download.html). You will need to install [Python 2.7, 32-bit]](https://www.python.org/downloads/) if you do not have it already (as of SCons 2.5.0, there is no Python3 support yet and the installer will not detect 64-bit Python versions).
+    - Make sure to add SCons to your system PATH. By default, SCons will be installed in the `Scripts` folder under your Python directory.
 0. Install [OpenOCD](http://openocd.org/), a program that interfaces with the on-board debugger.
   - **IMPORTANT**: The latest official OpenOCD release does not support the Nucleo L432KC. We've added support and [built binaries which you can download and install](https://github.com/cs194-126/openocd/releases). For the paranoid or truly crazy among us, [you can see the code we changed](https://github.com/cs194-126/openocd/commit/f2501b08a11931191048a76883e0541f9cb1d079) and build it from source if you wish.
+  - If you would like to run OpenOCD from the command line, make sure to set the proper environment variables:
+    - Add the OpenOCD binary directory to your system `PATH`:
+      - On Ubuntu, this is in the `bin` folder of whereever you untared OpenOCD to.
+      - On Windows, the default is `C:\Program Files\GNU ARM Eclipse\OpenOCD\(version)\bin`
+    - Add the OpenOCD scripts directory to your system `OPENOCD_SCRIPTS`, this allows you to run OpenOCD from anywhere without needing to explicitly specify the scripts directory location:
+      - On Ubuntu, this is in the `scripts` folder of whereever you untared OpenOCD to.
+      - On Windows, the default is `C:\Program Files\GNU ARM Eclipse\OpenOCD\(version)\scripts`
 
 _Note: for this lab, we don't check what environment you use, so this checkoff can be completed with [mbed online compiler](https://developer.mbed.org/compiler/) if you so choose. However, the system described by the installation instructions above will be required when the JITPCB labs roll around (since JITPCB does not have integration with the mbed online compiler), so you might as well get this set up now._
 
