@@ -113,8 +113,6 @@ _This section is optional, for people who want to work with an IDE and GUI debug
      ```
      -f interface/st-link-v2-1.cfg
      -f target/stm32l4x.cfg
-     -c init
-     -c "reset halt"
      ```
 
   0. Under the Startup tab:
