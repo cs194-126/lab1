@@ -7,6 +7,10 @@ _Set up required software._
 
 0. Install [GCC-ARM](https://launchpad.net/gcc-arm-embedded) to build the embedded firmware.
   - On Debian-based systems (including Ubuntu), a [PPA and the instructions for setting it up are available](https://launchpad.net/~team-gcc-arm-embedded/+archive/ubuntu/ppa). Note: the one included by default in the system package manager may not work.
+    - If you cannot run the `add-apt-repository` command, you may need to install `software-properties-common`:
+      ```
+      sudo apt-get install software-properties-common
+      ```
   - On Windows and Mac, [download and run this installer](https://launchpad.net/gcc-arm-embedded).
     - On Windows, at the end of the installation, make sure to check "Add path to environment variable" so it can be run from anywhere.
   - On Debian-based systems (including Ubuntu), this is available as a package:
