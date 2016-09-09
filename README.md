@@ -80,6 +80,7 @@ _Check that the compiled firmware works._
   to run the build system, which compiles both the mbed library in `mbed/` and the top-level program in `src/`. This should produce a compiled, flashable binary, `build/program.bin`.
 0. Connect your microcontroller board to your computer via USB. You should see a flash drive named `NUCLEO_L432KC` show up.
 0. Copy `build/program.bin` into the `NUCLEO_L432KC` flash drive to write the program to the microcontroller. This may take a few seconds.
+  - Note that while this is convenient, this type of programming the chip through USB Mass Storage Device protocol is very much a nonstandard hack and may not work on all platforms or with 100% reliability. Reconnecting the Nucleo may help in cases where it stops working. Otherwise, programming over the debug link with OpenOCD is described [below](#installing-eclipse).
 0. If it worked, the onboard user-controlled LED (the green one next to the reset button) should blink at about 1Hz.
 
 ### Installing Eclipse
@@ -145,7 +146,9 @@ Others have the power rails connected all the way across the length of the bread
 You will want to check if your breadboard is wired like this.
 
 #### LED Circuit
-You will need a LED connected to a PWM-capable output. Note that the pin the onboard LED is connected is NOT PWM-capable, so you will need to wire up an external circuit. The typical circuit for an indicator LED is a LED in series with a resistor:
+You will need a LED connected to a PWM-capable output. Note that not all pins are PWM capable (notably, the pin the onboard LED is connected to is _NOT_), so you will need to wire up an external circuit. [The Nucleo pinning guide](https://developer.mbed.org/platforms/ST-Nucleo-L432KC/) may be helpful here.
+
+The typical circuit for an indicator LED is a LED in series with a resistor:
 
 ![LED circuit](/docs/led.png?raw=true)
 
@@ -156,8 +159,6 @@ For reference, a LED is pinned like (one background square is one breadboard tie
 ![LED component](/docs/led-pinning.png?raw=true)
 
 Note that the flat side on the flange (circled in red) indicates the negative terminal, or cathode (K). The other pin is the positive terminal, or anode (A).
-
-[The Nucleo pinning guide](https://developer.mbed.org/platforms/ST-Nucleo-L432KC/) may be helpful.
 
 #### Switch Circuit
 
@@ -176,9 +177,11 @@ For reference, a switch is pinned like (one background square is one breadboard 
 Note that two pairs of pins are internally connected together, and pressing the switch connects the pairs (such that all four pins would be connected). Don't wire it with the "switch" across the two internally connected pins, otherwise you'll get a "switch" that's always pressed!
 
 ### Software
-In the included example code, you have `DigitalOut led(LED1)`, which creates an object of class `DigitalOut` (with one argument, PinName `LED1`) as `led`. For this assignment, the following other classes may be helpful:
- - `DigitalIn(PinName, mode)`: a digital input object, with an optional `mode` parameter (configurable as `PullUp` or `PullDown`). Objects can be read as an int, returning 0 when the input is low and 1 when the input is high.
- - `PwmOut(PinName)`: a PWM output. A float can be assigned to this object, setting the duty cycle (fraction of time the output is high, `1.0f` = 1 period). The default period is 20ms, which is fast enough for LED dimming.
+In the included example code, you have `DigitalOut led(LED1)`, which creates an object of class `DigitalOut` [(API reference here)](https://developer.mbed.org/handbook/DigitalOut) as `led` (with one argument, `PinName` set to `LED1`). For this assignment, the following other classes may be helpful:
+ - `DigitalIn(PinName, mode)` [(API reference here)](https://developer.mbed.org/handbook/DigitalIn): a digital input object, with an optional `mode` parameter (configurable as `PullUp` or `PullDown`). Objects can be read as an int, returning 0 when the input is low and 1 when the input is high.
+ - `PwmOut(PinName)` [(API reference here)](https://developer.mbed.org/handbook/PwmOut): a PWM output. A float can be assigned to this object, setting the duty cycle (fraction of time the output is high, `1.0f` = 1 period). The default period is 20ms, which is fast enough for LED dimming.
+
+For PinName arguments, you may specify either the chip pin name (like `PA_9`, `PA_10`, or `PB_0`) or the board pin name (which is physically printed on the board, like `D0`, `D1`, or `A0`).
 
 Note that if you simply vary the PWM output to a LED linearly, you will get nonlinear perceived brightness (see [Stevens' power law](https://en.wikipedia.org/wiki/Stevens%27_power_law) for more information). To compensate, you want the PWM duty cycle to be the square of the desired perceived brightness.
 
