@@ -115,7 +115,7 @@ _This section is optional, for people who want to work with an IDE and GUI debug
     - Set the Config Options to include flags for interface / target configuration (`-f`), and startup commands (`-c`):
 
      ```
-     -f interface/st-link-v2-1.cfg
+     -f interface/stlink-v2-1.cfg
      -f target/stm32l4x.cfg
      ```
 
