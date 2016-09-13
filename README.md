@@ -86,6 +86,8 @@ _Check that the compiled firmware works._
 ### Installing Eclipse
 _This section is optional, for people who want to work with an IDE and GUI debug tools. This is recommended for beginners, as it provides a low learning curve and integrated way to code, program, and debug firmware. For the masochists among us that love vim/emacs and command-line GDB, feel free to skip this section._
 
+_If you simply want to load code, other options include [drag-and-drop programming](#build-sanity-check) or [command-line through OpenOCD](#command-line-programming).
+
 #### Initial setup
 0. [Download Eclipse](https://www.eclipse.org/downloads/). Eclipse IDE for C/C++ developers is a good option.
 0. Install some Eclipse plugins:
@@ -127,6 +129,60 @@ _This section is optional, for people who want to work with an IDE and GUI debug
 0. Try launching the debug target. This will flash the microcontroller and start it.
   - If all goes well, you should be able to pause the target (and Eclipse should bring up the next line of code the microcontroller will execute). The normal debugging tools are available: step-into, step-over, step-out, breakpoints, register view, memory view, and more.
   - PROTIP: you can launch the last debug target with Ctrl+F11.
+
+### Command Line Programming
+_If you don't want to set up an IDE and drag-and-drop flashing isn't reliable, you can also flash the microcontroller using OpenOCD._
+
+0. Ensure the built binaries (`.bin` files) are up to date by invoking `scons`.
+0. Do a sanity check by launching OpenOCD with the interface and target configuration:
+
+  ```
+  openocd -f interface/stlink-v2-1.cfg -f target/stm32l4x.cfg
+  ```
+
+  - If all worked well, you should see something ending with:
+
+    ```
+    Info : clock speed 480 kHz
+    Info : STLINK v2 JTAG v25 API v2 SWIM v14 VID 0x0483 PID 0x374B
+    Info : using stlink api v2
+    Info : Target voltage: 3.264822
+    Info : stm32l4x.cpu: hardware has 6 breakpoints, 4 watchpoints
+    ```
+
+    At this point, you can close down OpenOCD. OpenOCD works by acting as a server, waiting for commands from socket connections. You can interactively use the OpenOCD console through telnet, but we won't go into that. Those interested should read the official [OpenOCD documentation](http://openocd.org/doc/html/General-Commands.html).
+  - If the target device isn't connected, you would see an error like:
+
+    ```
+    Info : clock speed 480 kHz
+    Error: open failed
+    ```
+
+  - If your OpenOCD isn't set up correctly, you might see an error like:
+
+    ```
+    embedded:startup.tcl:60: Error: Can't find target/stm32l4x.cfg
+    in procedure 'script'
+    at file "embedded:startup.tcl", line 60
+    ```
+
+    Double check to ensure that you're using our patched OpenOCD (the version should be `0.10.0-dev-00288-gf2501b0 (2016-08-30-00:54)`) and that your `OPENOCD_SCRIPTS` environment variable is set correctly.
+0. Flash your program binary using this command:
+
+  ```
+  openocd \
+  -f interface/stlink-v2-1.cfg \
+  -f target/stm32l4x.cfg \
+  -c init \
+  -c "reset halt" \
+  -c "flash erase_sector 0 0 last" \
+  -c "flash write_bank 0 build/program.bin 0" \
+  -c "reset run" \
+  -c "exit"
+  ```
+
+  This assumes that you're currently in the repository root directory. Otherwise, replace `build/program.bin` with the location to the binary to flash. This also immediately starts your program on the target after flashing; if you don't want this behavior just remove the `-c "reset run"` line.
+0. OpenOCD integrates with command-line GDB, if that's your thing. Compared to a modern IDE, GDB has a steeper learning curve, so how to use GDB is outside the scope of this lab. However, [instructions for integrating OpenOCD and GDB are avialable](http://openocd.org/doc/html/GDB-and-OpenOCD.html).
 
 ## Assignment
 In this assignment, you will build (on a breadboard), a circuit that pulses a LED with a button that freezes the pulsing.
