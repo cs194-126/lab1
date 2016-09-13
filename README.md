@@ -86,7 +86,7 @@ _Check that the compiled firmware works._
 ### Installing Eclipse
 _This section is optional, for people who want to work with an IDE and GUI debug tools. This is recommended for beginners, as it provides a low learning curve and integrated way to code, program, and debug firmware. For the masochists among us that love vim/emacs and command-line GDB, feel free to skip this section._
 
-_If you simply want to load code, other options include [drag-and-drop programming](#build-sanity-check) or [command-line through OpenOCD](#command-line-programming).
+_If you simply want to load code, other options include [drag-and-drop programming](#build--sanity-check) or [command-line programming through OpenOCD](#command-line-programming)._
 
 #### Initial setup
 0. [Download Eclipse](https://www.eclipse.org/downloads/). Eclipse IDE for C/C++ developers is a good option.
@@ -182,7 +182,7 @@ _If you don't want to set up an IDE and drag-and-drop flashing isn't reliable, y
   ```
 
   This assumes that you're currently in the repository root directory. Otherwise, replace `build/program.bin` with the location to the binary to flash. This also immediately starts your program on the target after flashing; if you don't want this behavior just remove the `-c "reset run"` line.
-0. OpenOCD integrates with command-line GDB, if that's your thing. Compared to a modern IDE, GDB has a steeper learning curve, so how to use GDB is outside the scope of this lab. However, [instructions for integrating OpenOCD and GDB are avialable](http://openocd.org/doc/html/GDB-and-OpenOCD.html).
+0. OpenOCD integrates with command-line GDB, if that's your thing. Compared to a modern IDE, GDB has a steeper learning curve, so how to use GDB is outside the scope of this lab. However, [instructions for integrating OpenOCD and GDB are available](http://openocd.org/doc/html/GDB-and-OpenOCD.html).
 
 ## Assignment
 In this assignment, you will build (on a breadboard), a circuit that pulses a LED with a button that freezes the pulsing.
