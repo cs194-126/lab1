@@ -11,14 +11,20 @@ _Set up required software._
       ```
       sudo apt-get install software-properties-common
       ```
-  - On Windows and Mac, [download and run this installer](https://launchpad.net/gcc-arm-embedded).
-    - On Windows, at the end of the installation, make sure to check "Add path to environment variable" so it can be run from anywhere.
+  - On Mac, [download the latest macosx tarball](https://launchpad.net/gcc-arm-embedded), extract it to somewhere (e.g. your home directory),
+    and then add the path to the `bin/` subfolder to your PATH.
+  - On Windows, [download and run this installer](https://launchpad.net/gcc-arm-embedded).
+    - At the end of the installation, make sure to check "Add path to environment variable" so it can be run from anywhere.
+0. Install SCons, the build system.
   - On Debian-based systems (including Ubuntu), this is available as a package:
 
     ```
     sudo apt-get install scons
     ```
-
+  - On Mac, install Homebrew and run:
+    ```
+    brew install scons
+    ```
   - On Windows, [download and run this installer](http://scons.org/pages/download.html). You will need to install [Python 2.7, 32-bit](https://www.python.org/downloads/) if you do not have it already (as of SCons 2.5.0, there is no Python3 support yet and the installer will not detect 64-bit Python versions).
     - Make sure to add SCons to your system PATH. By default, SCons will be installed in the `Scripts` folder under your Python directory.
 0. Install [OpenOCD](http://openocd.org/), a program that interfaces with the on-board debugger.
